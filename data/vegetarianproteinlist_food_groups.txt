@@ -1,0 +1,45 @@
+Food	Group
+Almonds	Nuts
+Artichoke	Vegetables
+Asparagus	Vegetables
+Avocado	Fruit
+Black Beans	Legumes
+Broccoli	Vegetables
+Brown Rice	Cereals
+Brussels Sprouts	Vegetables
+Cashews	Nuts
+Chia Seeds	Seeds
+Chickpeas	Legumes
+Corn	Legumes
+Couscous	Cereals
+Edamame	Vegetables
+Flaxseed	Seeds
+Garbanzo Beans	Legumes
+Green Beans	Legumes
+Hummus	Other
+Kale	Vegetables
+Kidney Beans	Legumes
+Lentils	Legumes
+Lima Beans	Legumes
+Oatmeal	Cereals
+Pasta	Other
+Peanuts	Nuts
+Peanut Butter	Nuts
+Peas	Legumes
+Pecans	Nuts
+Pine Nuts	Nuts
+Pinto Beans	Legumes
+Pistachios	Nuts
+Potato	Legumes
+Pumpkin SeedProtein Powder	Other
+Pumpkin Seeds	Seeds
+Quinoa	Cereals
+Sesame Seeds	Seeds
+Soy Milk	Other
+Soybeans	Legumes
+Spinach	Vegetables
+Sunflower Seeds	Seeds
+Tahini	Other
+Tofu	Other
+Walnuts	Nuts
+White Rice	Cereals
