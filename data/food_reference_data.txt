@@ -1,0 +1,110 @@
+Size	Food	Reference	Group
+100	Avocado	Avocados, raw, all commercial varieties	Fruits
+100	Banana	Bananas, raw	Fruits
+100	Banana Pie	Pie, banana cream, prepared from mix, no-bake type	Fruits
+100	Acerola	Acerola, (west indian cherry), raw	Fruits
+100	Apples	Apples, raw, with skin	Fruits
+100	Apricots	Apricots, raw	Fruits
+100	Blueberries	Blueberries, raw	Fruits
+100	Carambola	Carambola, (starfruit), raw	Fruits
+100	Cherries Sour	Cherries, sour, red, raw	Fruits
+100	Cherries Sweet	Cherries, sweet, raw	Fruits
+100	Cranberries	Cranberries, raw	Fruits
+100	Figs	Figs, raw	Fruits
+100	Grapefruit Red	Grapefruit, raw, pink and red and white, all areas	Fruits
+100	Grapefruit White	Grapefruit, raw, white, all areas	Fruits
+100	Grapes	Grapes, red or green (European type, such as Thompson seedless), raw	Fruits
+100	Guavas	Guavas, common, raw	Fruits
+100	Kiwifruit	Kiwifruit, green, raw	Fruits
+100	Lemons	Lemons, raw, without peel	Fruits
+100	Limes	Limes, raw	Fruits
+100	Litchis	Litchis, raw	Fruits
+100	Mangos	Mangos, raw	Fruits
+100	Melons	Melons, casaba, raw	Fruits
+100	Nectarines	Nectarines, raw	Fruits
+100	Oranges	Oranges, raw, all commercial varieties	Fruits
+100	Papayas	Papayas, raw	Fruits
+100	Passion-fruit	Passion-fruit, (granadilla), purple, raw	Fruits
+100	Peaches	Peaches, raw	Fruits
+100	Pears	Pears, raw, bartlett	Fruits
+100	Pineapple	Pineapple, raw, all varieties	Fruits
+100	Pitanga	Pitanga, (surinam-cherry), raw	Fruits
+100	Plums	Plums, raw	Fruits
+100	Pomegranates	Pomegranates, raw	Fruits
+100	Raspberries	Raspberries, raw	Fruits
+100	Strawberries	Strawberries, raw	Fruits
+100	Tangerines	Tangerines, (mandarin oranges), raw	Fruits
+100	Watermelon	Watermelon, raw	Fruits
+100	Artichokes	Artichokes, (globe or french), cooked, boiled, drained, with salt	Vegetables
+100	Asparagus	Asparagus, cooked, boiled, drained, with salt	Vegetables
+100	Beets	Beets, cooked, boiled. drained, with salt	Vegetables
+100	Broccoli	Broccoli, cooked, boiled, drained, with salt	Vegetables
+100	Brussels sprouts	Brussels sprouts, cooked, boiled, drained, with salt	Vegetables
+100	Cabbage	Cabbage, common, cooked, boiled, drained, with salt	Vegetables
+100	Cabbage	Cabbage, red, cooked, boiled, drained, with salt	Vegetables
+100	Carrots	Carrots, cooked, boiled, drained, with salt	Vegetables
+100	Cauliflower	Cauliflower, cooked, boiled, drained, with salt	Vegetables
+100	Cauliflower	Cauliflower, green, cooked, with salt	Vegetables
+100	Celeriac	Celeriac, cooked, boiled, drained, with salt	Vegetables
+100	Collards	Collards, cooked, boiled, drained, with salt	Vegetables
+100	Corn	Corn, sweet, yellow, cooked, boiled, drained, with salt	Vegetables
+100	Eggplant	Eggplant, cooked, boiled, drained, with salt	Vegetables
+100	Kale	Kale, cooked, boiled, drained, with salt	Vegetables
+100	Lotus root	Lotus root, cooked, boiled, drained, with salt	Vegetables
+100	Mushrooms	Mushrooms, white, cooked, boiled, drained, with salt	Vegetables
+100	Onions	Onions, cooked, boiled, drained, with salt	Vegetables
+100	Peas	Peas, green, cooked, boiled, drained, with salt	Vegetables
+100	Peppers Green	Peppers, sweet, green, cooked, boiled, drained, with salt	Vegetables
+100	Peppers Red	Peppers, sweet, red, cooked, boiled, drained, with salt	Vegetables
+100	Potatoes	Potatoes, boiled, cooked in skin, flesh, with salt	Vegetables
+100	Pumpkin	Pumpkin, cooked, boiled, drained, with salt	Vegetables
+100	Shiitake	Mushrooms, shiitake, cooked, with salt	Vegetables
+100	Spinach	Spinach, cooked, boiled, drained, with salt	Vegetables
+100	Squash	Squash, summer, all varieties, cooked, boiled, drained, with salt	Vegetables
+100	Sweet potato	Sweet potato, cooked, baked in skin, flesh, with salt	Vegetables
+100	Tomatoes	Tomatoes, red, ripe, cooked, with salt	Vegetables
+100	Zucchini	Squash, summer, zucchini, includes skin, cooked, boiled, drained, with salt	Vegetables
+25	Pumpkin Seeds	Seeds, pumpkin and squash seed kernels, dried	Seeds
+25	Sunflower Seeds	Seeds, sunflower seed kernels, dried	Seeds
+25	Sesame Seeds	Seeds, sesame seeds, whole, dried	Seeds
+25	Chia Seeds	Seeds, chia seeds, dried	Seeds
+25	Flaxseed	Seeds, flaxseed	Nuts
+0			Nuts
+25	Peanuts	Peanuts, all types, dry-roasted, with salt	Nuts
+25	Peanut Butter	Peanut butter, smooth style, with salt	Nuts
+25	Pistachio	Nuts, pistachio nuts, dry roasted, with salt added	Nuts
+25	Almonds	Nuts, almonds, dry roasted, with salt added	Nuts
+25	Cashews	Nuts, cashew nuts, dry roasted, with salt added	Nuts
+25	Pecans	Nuts, pecans, dry roasted, with salt added	Nuts
+25	Walnuts	Nuts, walnuts, english	Nuts
+100	Lentil	Lentils, sprouted, cooked, stir-fried, without salt	Beans&Cereals
+100	Black Beans	Beans, black, mature seeds, cooked, boiled, without salt	Beans&Cereals
+100	Soybeans	Soybeans, green, cooked, boiled, drained, without salt	Beans&Cereals
+100	Edamame	Edamame, frozen, prepared	Beans&Cereals
+100	Chickpea	Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt	Beans&Cereals
+			Beans&Cereals
+100	White Rice	Rice, white, medium-grain, cooked	Beans&Cereals
+100	Brown Rice	Rice, brown, medium-grain, cooked	Beans&Cereals
+100	Quinoa	Quinoa, cooked	Beans&Cereals
+100	Couscous	Couscous, cooked	Beans&Cereals
+100	Amaranth		Flour
+100	Chickpea	Chickpea flour (besan)	Flour
+100	Oatmeal	Oat flour, partially debranned	Flour
+100	White rice	Rice flour, white	Flour
+100	Brown rice	Rice flour, brown	Flour
+100	Millet	Millet flour	Flour
+100	quinoa flour		Flour
+100	coconut flour		Flour
+100	Corn	Corn flour, whole-grain, yellow	Flour
+100	Wheat whole	Wheat flour, whole-grain	Flour
+100	Wheat white	Wheat flour, white, all-purpose, enriched, bleached	Flour
+100	Buckwheat	Buckwheat flour, whole-groat	Flour
+100	Cashew	Nuts, cashew nuts, dry roasted, with salt added	Flour
+100	Peanut	Peanut flour, low fat	Flour
+100	Almond	Nuts, cashew nuts, dry roasted, with salt added	Flour
+			Flour
+100	Pumpkin seed	Seeds, pumpkin and squash seed kernels, dried	Flour
+100	Sesame seed	Seeds, pumpkin and squash seed kernels, dried	Flour
+100	Flaxseed	Seeds, flaxseed	Flour
+100	Sunflower seed	Seeds, sunflower seed kernels, dried	Flour
+100	Chia	Seeds, chia seeds, dried	Flour
