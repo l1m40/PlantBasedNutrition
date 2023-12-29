@@ -1,0 +1,36 @@
+V1	V2	nutr	daily_value	daily_metric	nutr_def
+Added sugars	50g	Added sugars	50	g	
+Biotin	30mcg	Biotin	30	mcg	
+Calcium	1300mg	Calcium	1300	mg	Calcium, Ca
+Chloride	2300mg	Chloride	2300	mg	
+Choline	550mg	Choline	550	mg	Choline, total
+Cholesterol	300mg	Cholesterol	300	mg	Cholesterol
+Chromium	35mcg	Chromium	35	mcg	
+Copper	0.9mg	Copper	0.9	mg	Copper, Cu
+Dietary Fiber	28g	Dietary Fiber	28	g	Fiber, total dietary
+Fat	78g	Fat	78	g	Fat
+Folate/Folic Acid	400mcg DFE	Folate/Folic Acid	400	mcg DFE	Folate, DFE
+lodine	150mcg	lodine	150	mcg	
+Iron	18mg	Iron	18	mg	Iron, Fe
+Magnesium	420mg	Magnesium	420	mg	Magnesium, Mg
+Manganese	2.3mg	Manganese	2.3	mg	Manganese, Mn
+Molybdenum	45mcg	Molybdenum	45	mcg	
+Niacin	16mg NE	Niacin	16	mg NE	Niacin
+Pantothenic Acid	5mg	Pantothenic Acid	5	mg	
+Phosphorus	1250mg	Phosphorus	1250	mg	Phosphorus, P
+Potassium	4700mg	Potassium	4700	mg	Potassium, K
+Protein	50g	Protein	50	g	
+Riboflavin	1.3mg	Riboflavin	1.3	mg	Riboflavin
+Saturated fat	20g	Saturated fat	20	g	Fatty acids, total saturated
+Selenium	55mcg	Selenium	55	mcg	Selenium, Se
+Sodium	2300mg	Sodium	2300	mg	Sodium, Na
+Thiamin	1.2mg	Thiamin	1.2	mg	Thiamin
+Total carbohydrate	275g	Total carbohydrate	275	g	Carbo
+Vitamin A	900mcg RAE	Vitamin A	900	mcg RAE	Vitamin A, RAE
+Vitamin B6	1.7mg	Vitamin B6	1.7	mg	Vitamin B-6
+Vitamin B12	2.4mcg	Vitamin B12	2.4	mcg	Vitamin B-12
+Vitamin C	90mg	Vitamin C	90	mg	Vitamin C, total ascorbic acid
+Vitamin D	20mcg	Vitamin D	20	mcg	Vitamin D
+Vitamin E	15mg alpha-tocopherol	Vitamin E	15	mg alpha-tocopherol	Vitamin E (alpha-tocopherol)
+Vitamin K	120mcg	Vitamin K	120	mcg	Vitamin K (phylloquinone)
+Zinc	11 mg	Zinc	11	mg	Zinc, Zn
