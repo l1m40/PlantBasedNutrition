@@ -1,0 +1,15 @@
+Size	Food	Reference
+300	Grao de bico	Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, with salt
+75	Fuba	Corn flour, whole-grain, yellow
+45	Polvilho doce	Tapioca, pearl, dry
+50	Azeite de oliva	Oil, olive, salad or cooking
+10	Chia	Seeds, chia seeds, dried
+5	Sal	Salt, table
+300	Tofu	Tofu, hard, prepared with nigari
+200	Cogumelo	Mushrooms, white, cooked, boiled, drained, with salt
+200	Inhame	Yam, cooked, boiled, drained, or baked, without salt
+80	Alho poro	Leeks, (bulb and lower leaf-portion), raw
+80	Leite vegetal	Soymilk, original and vanilla, unfortified
+50	Espinafre	Spinach, cooked, boiled, drained, without salt
+15	Shoyu	Soy sauce made from soy and wheat (shoyu), low sodium
+1	Noz moscada	Spices, nutmeg, ground
