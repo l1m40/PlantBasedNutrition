@@ -45,6 +45,36 @@ load_data_from_SR27 <- function(){
 
 load_reference_data <- function(){ ref_df <<- import("data/food_reference_data.txt") }
 
+
+choose_nutrition_df <- function(nutrition_df,ref_df,food_sample=0){
+  ref_sample_df <- ref_df %>% rename(food_des=Reference)
+  if(food_sample>0) { ref_sample_df <- ref_sample_df %>% slice_sample(n=food_sample,replace=T) }
+  nutrition_df %>% 
+    #mutate(nutr_value=as.double(nutr_value)) %>% 
+    left_join(nutrition_df %>% filter(nutr_def=="Energy") %>% mutate(value_energy=as.double(nutr_value)) %>% select(food_des,value_energy),by=c("food_des")) %>% 
+    mutate(value_per_cal=nutr_value/value_energy) %>% 
+    group_by(nutr_def) %>% 
+    mutate(value_per_cal=ifelse(value_per_cal>quantile(value_per_cal,.95,na.rm=T),quantile(value_per_cal,.95,na.rm=T),value_per_cal)) %>% 
+    mutate(value_per_cal_zscore=(value_per_cal-mean(value_per_cal,na.rm=T))/sd(value_per_cal,na.rm=T)) %>% mutate(value_per_cal_zscore=ifelse(abs(value_per_cal_zscore)>1,(1*abs(value_per_cal_zscore)/value_per_cal_zscore),value_per_cal_zscore)) %>% 
+    ungroup() %>% 
+    #filter(macronutrients | other_compositions) %>% 
+    #filter(other_compositions) %>% 
+    #filter(cbo) %>% 
+    #filter(vitamin) %>% 
+    #filter(nutr_def=="Calcium, Ca" | grepl("Vitamin D",nutr_def)) %>% 
+    inner_join(ref_sample_df,by="food_des") %>%
+    #filter(food_des %in% c("Peanuts, all types, raw")) %>% mutate(Food=food_des,Size=100,Group=group_name) %>% 
+    mutate(Group=ifelse(Group=="Beans&Cereals",ifelse(group_name=="Cereal Grains and Pasta","Cereals","Beans"),Group)) %>% 
+    mutate(Group_factor=factor(Group,levels=c("Fruits","Vegetables","Seeds","Nuts","Beans","Cereals","Flour"))) %>% 
+    arrange(composition,Food) %>% mutate(nutr_order=row_number()) %>% 
+    mutate(Value=nutr_value*Size/100) %>% arrange(Group,desc(Food)) %>% mutate(order=row_number()) %>% 
+    #group_by(nutr_def) %>% mutate(value_ratio=Value/max(Value,na.rm=T)) %>% ungroup() %>% 
+    group_by(nutr_def) %>% mutate(value_max=(mean(Value,na.rm=T)+1*sd(Value,na.rm=T))) %>% mutate(value_ratio=Value/value_max) %>% ungroup() %>% mutate(value_ratio=ifelse(value_ratio>1,1,value_ratio)) %>% 
+    group_by(nutr_def) %>% mutate(value_zscore=(Value-mean(Value,na.rm=T))/sd(Value,na.rm=T)) %>% ungroup() %>% mutate(value_zscore_2sd=ifelse(abs(value_zscore)>2,(2*abs(value_zscore)/value_zscore),value_zscore)) %>% mutate(value_zscore=ifelse(abs(value_zscore)>1,(1*abs(value_zscore)/value_zscore),value_zscore)) %>% 
+    ungroup()
+}
+
+
 load_daily_value_nutrient <- function() {
   # Source https://www.fda.gov/media/135301/download?attachment
   daily_df <<- import("data/daily_value_nutrient.txt") %>% 
