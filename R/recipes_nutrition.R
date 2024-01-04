@@ -24,7 +24,7 @@ plot_sample_recipe <- function() {
 
 
 
-plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df) {
+plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_nutr=F) {
   
   # main_nutr_def         <- c("Energy",  "Fat",      "Fatty acids, total saturated","Fatty acids, total trans","Cholesterol","Sodium, Na","Carbo",             "Fiber, total dietary","Sugars, total","Protein")
   # main_nutritrion_facts <- c("Calories","Total Fat","Saturated Fat",               "Trans Fat",               "Cholesterol","Sodium",    "Total Carbohydrate","Dietary Fiber",       "Sugars",       "Protein")
@@ -49,11 +49,11 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df) {
     mutate(bar_fill=factor(ifelse(Nutrient %in% bad__nutritrion_facts,2,ifelse(Nutrient %in% good_nutritrion_facts,1,0)))) %>% 
     mutate(i=row_number()) %>% 
     ggplot(aes(x=-1,y=-i))+
-    geom_rect(aes(xmin=-daily_percent-ifelse(daily_percent==0,-.01,.1),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
+    geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
     scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
     geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
     geom_hline(aes(yintercept=+0.5),linewidth=3)+
-    geom_hline(aes(yintercept=-9.8),linewidth=3)+
+    #geom_hline(aes(yintercept=-9.8),linewidth=3)+
     annotate("text",x=0,y=0,label="% Daily Value*",size=3,hjust=1)+
     geom_text(aes(x=ifelse(Nutrient %in% c("Saturated Fat","Trans Fat","Dietary Fiber","Sugars"),.1,0)-1,
                   #label=paste0("'",Nutrient,"', bold('",sprintf("%0.1f",portion),metric,"')")),
@@ -62,13 +62,54 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df) {
     geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),hjust=1)+
     theme_void()+theme(legend.position="none")
   
-  grid.arrange(
-    plot_header,
-    df %>% filter(nutr_def=="Energy") %>% ggplot()+geom_text(aes(x=2,y=0,label=sprintf("%0.0f",portion)),size=5,fontface=2,hjust=1,vjust=1)+annotate("text",x=1,y=0,label="Calories",size=5,fontface=2,hjust=0,vjust=1)+theme_void(),
-    plot_main_nutr_def,
-    heights=c(1,.5,5)
-    
-  )
+  plot_ingredients <- recipe_df %>% mutate(i=row_number()) %>% 
+    mutate(c=ifelse(i<(nrow(recipe_df)/2+1),-.8,-.3)) %>% 
+    mutate(i=ifelse(i<(nrow(recipe_df)/2+1),i,i-round(nrow(recipe_df)/2))) %>% 
+    ggplot(aes(x=0,y=-i))+xlim(-1,0)+ylim(-10,0.5)+
+    geom_hline(aes(yintercept=+0.5),linewidth=3)+
+    annotate("text",x=-.85,y=0,label="Size (g)",size=3,hjust=1)+
+    annotate("text",x=-.80,y=0,label="Ingredients",size=3,hjust=0)+
+    annotate("text",x=-.35,y=0,label="Size (g)",size=3,hjust=1)+
+    annotate("text",x=-.30,y=0,label="Ingredients",size=3,hjust=0)+
+    geom_text(aes(x=(c-.05),label=Size),hjust=1)+
+    geom_text(aes(x=c,label=Food),hjust=0)+
+    theme_void()+theme(legend.position="none")
+  
+  if(!good_nutr) {
+    return(grid.arrange(
+      plot_header,
+      df %>% filter(nutr_def=="Energy") %>% ggplot()+geom_text(aes(x=2,y=0,label=sprintf("%0.0f",portion)),size=5,fontface=2,hjust=1,vjust=1)+annotate("text",x=1,y=0,label="Calories",size=5,fontface=2,hjust=0,vjust=1)+theme_void(),
+      plot_main_nutr_def,
+      plot_ingredients,
+      heights=c(1,.5,5,3)))
+  } else {
+    plot_other_nutr <- df %>% #distinct(nutr_def) %>% filter(grepl("Fat",nutr_def))
+      filter(!nutr_def %in% main_nutr_def) %>% 
+      left_join(daily_df,by="nutr_def") %>% mutate(daily_percent=portion/daily_value) %>% 
+      arrange(desc(daily_percent)) %>% head(9) %>% 
+      mutate(i=row_number()) %>% mutate(bar_fill=factor(1)) %>% mutate(Nutrient=nutr_def) %>% 
+      ggplot(aes(x=-1,y=-i))+
+      geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
+      scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
+      geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
+      geom_hline(aes(yintercept=+0.5),linewidth=3)+
+      #geom_hline(aes(yintercept=-9.8),linewidth=3)+
+      annotate("text",x=0,y=0,label="% Daily Value*",size=3,hjust=1)+
+      geom_text(aes(x=ifelse(Nutrient %in% c("Saturated Fat","Trans Fat","Dietary Fiber","Sugars"),.1,0)-1,
+                    #label=paste0("'",Nutrient,"', bold('",sprintf("%0.1f",portion),metric,"')")),
+                    label=paste0(Nutrient,"   ",sprintf("%0.1f",portion),"","","")),
+                hjust=0,parse=F)+
+      geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),hjust=1)+
+      theme_void()+theme(legend.position="none")
+    return(grid.arrange(
+      plot_header,
+      df %>% filter(nutr_def=="Energy") %>% ggplot()+geom_text(aes(x=2,y=0,label=sprintf("%0.0f",portion)),size=5,fontface=2,hjust=1,vjust=1)+annotate("text",x=1,y=0,label="Calories",size=5,fontface=2,hjust=0,vjust=1)+theme_void(),
+      plot_main_nutr_def,
+      plot_other_nutr,
+      plot_ingredients,
+      heights=c(1,.5,5,5,3))
+      )
+  }
   
   if(F){
     
@@ -80,10 +121,57 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df) {
              food_id,group_name,nutr_def,nutr_value,category) %>% head(20)
     
     
-    
+    #plot_other_nutr <- 
     df %>% #distinct(nutr_def) %>% filter(grepl("Fat",nutr_def))
-      filter(!nutr_def %in% main_nutritrion_facts) %>% 
-      group_by(nutr_def,metric) %>% summarise(Value=sum(Value)*.6,portion=Value/8) %>% arrange(desc(Value))
+      filter(!nutr_def %in% main_nutr_def) %>% 
+      left_join(daily_df,by="nutr_def") %>% mutate(daily_percent=portion/daily_value) %>% 
+      arrange(desc(daily_percent)) %>% head(9) %>% 
+      mutate(i=row_number()) %>% mutate(bar_fill=factor(1)) %>% mutate(Nutrient=nutr_def) %>% 
+      ggplot(aes(x=-1,y=-i))+
+      geom_rect(aes(xmin=pmax(-1,-daily_percent),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
+      scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
+      geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
+      geom_hline(aes(yintercept=+0.5),linewidth=3)+
+      #geom_hline(aes(yintercept=-9.8),linewidth=3)+
+      annotate("text",x=0,y=0,label="% Daily Value*",size=3,hjust=1)+
+      geom_text(aes(x=ifelse(Nutrient %in% c("Saturated Fat","Trans Fat","Dietary Fiber","Sugars"),.1,0)-1,
+                    #label=paste0("'",Nutrient,"', bold('",sprintf("%0.1f",portion),metric,"')")),
+                    label=paste0(Nutrient,"   ",sprintf("%0.1f",portion),"","","")),
+                hjust=0,parse=F)+
+      geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),hjust=1)+
+      theme_void()+theme(legend.position="none")
+    
+    
+    grid.arrange(
+      plot_header,
+      df %>% filter(nutr_def=="Energy") %>% ggplot()+geom_text(aes(x=2,y=0,label=sprintf("%0.0f",portion)),size=5,fontface=2,hjust=1,vjust=1)+annotate("text",x=1,y=0,label="Calories",size=5,fontface=2,hjust=0,vjust=1)+theme_void(),
+      plot_main_nutr_def,
+      plot_other_nutr,
+      heights=c(1,.5,5,5)
+      
+    )
+    
+    #plot_ingredients <- 
+    recipe_df %>% mutate(i=row_number()) %>% 
+      mutate(c=ifelse(i<(nrow(recipe_df)/2+1),-.8,-.4)) %>% 
+      mutate(i=ifelse(i<(nrow(recipe_df)/2+1),i,i-round(nrow(recipe_df)/2))) %>% 
+      ggplot(aes(x=0,y=-i))+xlim(-1,0)+ylim(-10,0)+
+      geom_hline(aes(yintercept=+0.5),linewidth=3)+
+      annotate("text",x=-.85,y=0,label="Size (g)",size=3,hjust=1)+
+      annotate("text",x=-.80,y=0,label="Ingredients",size=3,hjust=0)+
+      geom_text(aes(x=(c-.05),label=Size),hjust=1)+
+      geom_text(aes(x=c,label=Food),hjust=0)+
+      theme_void()+theme(legend.position="none")
+    
+    grid.arrange(
+      plot_header,
+      df %>% filter(nutr_def=="Energy") %>% ggplot()+geom_text(aes(x=2,y=0,label=sprintf("%0.0f",portion)),size=5,fontface=2,hjust=1,vjust=1)+annotate("text",x=1,y=0,label="Calories",size=5,fontface=2,hjust=0,vjust=1)+theme_void(),
+      plot_main_nutr_def,
+      plot_other_nutr,
+      plot_ingredients,
+      heights=c(1,.5,5,5,3)
+      
+    )
   }
   
   
