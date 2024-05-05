@@ -52,7 +52,7 @@ df %>%
   # geom_point(size=3,shape=15,aes(x=(-3.5),color=as.factor(ifelse(cup>.625,"1","0"))))+
   # geom_point(size=3,shape=15,aes(x=(-4.0),color=as.factor(ifelse(cup>.750,"1","0"))))+
   # geom_point(size=3,shape=15,aes(x=(-4.5),color=as.factor(ifelse(cup>.875,"1","0"))))+
-geom_point(size=5,shape=15,aes(x=(-1.0),color=as.factor(cup)))+
+  geom_point(size=5,shape=15,aes(x=(-1.0),color=as.factor(cup)))+
   geom_point(size=5,shape=15,aes(x=(-1.5),color=as.factor(ifelse(cup>.125,cup,0))))+
   geom_point(size=5,shape=15,aes(x=(-2.0),color=as.factor(ifelse(cup>.250,cup,0))))+
   geom_point(size=5,shape=15,aes(x=(-2.5),color=as.factor(ifelse(cup>.375,cup,0))))+

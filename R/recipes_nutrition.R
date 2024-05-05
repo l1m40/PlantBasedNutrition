@@ -26,6 +26,9 @@ plot_sample_recipe <- function() {
 
 plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_nutr=F) {
   
+  if(!exists("nutrition_df")) load_data_from_SR27()
+  if(!exists("daily_df")) load_daily_value_nutrient()
+  
   # main_nutr_def         <- c("Energy",  "Fat",      "Fatty acids, total saturated","Fatty acids, total trans","Cholesterol","Sodium, Na","Carbo",             "Fiber, total dietary","Sugars, total","Protein")
   # main_nutritrion_facts <- c("Calories","Total Fat","Saturated Fat",               "Trans Fat",               "Cholesterol","Sodium",    "Total Carbohydrate","Dietary Fiber",       "Sugars",       "Protein")
   main_nutr_def         <- c("Fat",      "Fatty acids, total saturated","Fatty acids, total trans","Cholesterol","Sodium, Na","Carbo",             "Fiber, total dietary","Sugars, total","Protein")
@@ -49,7 +52,7 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
     mutate(bar_fill=factor(ifelse(Nutrient %in% bad__nutritrion_facts,2,ifelse(Nutrient %in% good_nutritrion_facts,1,0)))) %>% 
     mutate(i=row_number()) %>% 
     ggplot(aes(x=-1,y=-i))+
-    geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
+    geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.2)+
     scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
     geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
     geom_hline(aes(yintercept=+0.5),linewidth=3)+
@@ -58,8 +61,8 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
     geom_text(aes(x=ifelse(Nutrient %in% c("Saturated Fat","Trans Fat","Dietary Fiber","Sugars"),.1,0)-1,
                   #label=paste0("'",Nutrient,"', bold('",sprintf("%0.1f",portion),metric,"')")),
                   label=paste0(Nutrient,"   ",sprintf("%0.1f",portion),metric)),
-              hjust=0,parse=F)+
-    geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),hjust=1)+
+              size=6,hjust=0,parse=F)+
+    geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),size=6,hjust=1)+
     theme_void()+theme(legend.position="none")
   
   plot_ingredients <- recipe_df %>% mutate(i=row_number()) %>% 
@@ -89,7 +92,7 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
       arrange(desc(daily_percent)) %>% head(9) %>% 
       mutate(i=row_number()) %>% mutate(bar_fill=factor(1)) %>% mutate(Nutrient=nutr_def) %>% 
       ggplot(aes(x=-1,y=-i))+
-      geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.1)+
+      geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.2)+
       scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
       geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
       geom_hline(aes(yintercept=+0.5),linewidth=3)+
@@ -98,8 +101,8 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
       geom_text(aes(x=ifelse(Nutrient %in% c("Saturated Fat","Trans Fat","Dietary Fiber","Sugars"),.1,0)-1,
                     #label=paste0("'",Nutrient,"', bold('",sprintf("%0.1f",portion),metric,"')")),
                     label=paste0(Nutrient,"   ",sprintf("%0.1f",portion),"","","")),
-                hjust=0,parse=F)+
-      geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),hjust=1)+
+                size=6,hjust=0,parse=F)+
+      geom_text(aes(x=0,label=ifelse(is.na(daily_percent),"",sprintf("%0.0f%%",daily_percent*100))),size=6,hjust=1)+
       theme_void()+theme(legend.position="none")
     return(grid.arrange(
       plot_header,
