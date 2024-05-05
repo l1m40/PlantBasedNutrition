@@ -12,3 +12,10 @@ Main data source: [SR27 collection by USDA](https://www.ars.usda.gov/northeast-a
     <a href="https://www.vegetarianproteinlist.com/">https://www.vegetarianproteinlist.com/</a>
     <img src="output/vegetarianproteinlist_proteins.png" alt="plot" width="600" height="600">
 </div>
+
+
+<br />
+<div align="center">
+  Hummus Nutrition Facts<br>
+    <img src="output/Nutrition_Facts_Hummus.JPG" alt="plot" width="400" height="600">
+</div>
