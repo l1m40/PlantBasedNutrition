@@ -9,6 +9,7 @@ Chromium	35mcg	Chromium	35	mcg
 Copper	0.9mg	Copper	0.9	mg	Copper, Cu
 Dietary Fiber	28g	Dietary Fiber	28	g	Fiber, total dietary
 Fat	78g	Fat	78	g	Fat
+Protein	50g	Protein	50	g	Protein
 Folate/Folic Acid	400mcg DFE	Folate/Folic Acid	400	mcg DFE	Folate, DFE
 lodine	150mcg	lodine	150	mcg	
 Iron	18mg	Iron	18	mg	Iron, Fe

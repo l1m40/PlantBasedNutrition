@@ -23,6 +23,12 @@ plot_sample_recipe <- function() {
 }
 
 
+plot_nutrition_value_heatmap <<- function(nutrition_df){
+  nutrition_df %>% ggplot()+geom_tile(aes(reorder(nutr_def,nutr_order),reorder(Food,order),fill=value_zscore))+labs(x="",y="Food",fill="zscore")+facet_grid(cols=vars(composition),rows=vars(Group_factor),scales="free",space="free")+theme_minimal()+theme(axis.text.x=element_text(angle=90,vjust=0.5,hjust=1))+scale_fill_gradient2(low="orange",mid="white",high="blue")
+}
+plot_value_calorie_heatmap <<- function(nutrition_df){
+  nutrition_df %>% ggplot()+geom_tile(aes(reorder(nutr_def,nutr_order),reorder(Food,order),fill=value_per_cal_zscore))+labs(x="",y="Food")+facet_grid(cols=vars(composition),rows=vars(Group_factor),scales="free",space="free")+theme_minimal()+theme(axis.text.x=element_text(angle=90,vjust=0.5,hjust=1))+scale_fill_gradient2(low="goldenrod",mid="white",high="slateblue")
+}
 
 plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_nutr=F) {
   
@@ -34,10 +40,11 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
   main_nutr_def         <- c("Fat",      "Fatty acids, total saturated","Fatty acids, total trans","Cholesterol","Sodium, Na","Carbo",             "Fiber, total dietary","Sugars, total","Protein")
   main_nutritrion_facts <- c("Total Fat","Saturated Fat",               "Trans Fat",               "Cholesterol","Sodium",    "Total Carbohydrate","Dietary Fiber",       "Sugars",       "Protein")
   bad__nutritrion_facts <- c("Total Fat","Saturated Fat","Trans Fat","Cholesterol","Sodium")
-  good_nutritrion_facts <- c("Dietary Fiber")
+  good_nutritrion_facts <- c("Dietary Fiber","Protein")
   
-  df <- choose_nutrition_df(nutrition_df,recipe_df %>% select(Size,Food,Reference,Group)) %>% 
-    filter(Group=="Recipe") %>% group_by(nutr_def,metric) %>% summarise(Value=sum(Value),portion=Value*serving_size,.groups="keep") %>% ungroup()
+  df <- choose_nutrition_df(nutrition_df ,recipe_df %>% select(Size,Food,Reference,Group)) %>% 
+    # filter(Group=="Recipe") %>%
+    group_by(nutr_def,metric) %>% summarise(Value=sum(Value),portion=Value*serving_size,.groups="keep") %>% ungroup()
   
   plot_header <- recipe_df %>% summarise(Size=sum(Size)) %>% 
     ggplot()+geom_hline(aes(yintercept=+0.5),linewidth=3)+
@@ -53,7 +60,7 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
     mutate(i=row_number()) %>% 
     ggplot(aes(x=-1,y=-i))+
     geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.2)+
-    scale_fill_manual(values=c("0"="gray","1"="green","2"="red"))+
+    scale_fill_manual(values=c("0"="gray21","1"="green","2"="red"))+
     geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
     geom_hline(aes(yintercept=+0.5),linewidth=3)+
     #geom_hline(aes(yintercept=-9.8),linewidth=3)+
@@ -180,3 +187,6 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
   
   
 }
+
+
+
