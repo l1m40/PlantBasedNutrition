@@ -10,27 +10,28 @@ if (!require("pacman")) install.packages("pacman")
 pacman::p_load(pacman,rio,tidyverse) 
 
 # CODING ###################################################
-
+if(!exists("data_path",envir=.GlobalEnv)) assign("data_path","published_data",envir=.GlobalEnv)
+load_reference_data <- function(){ assign("ref_df",import(file.path(data_path,"food_reference_data.txt")),envir=.GlobalEnv) }
 
 load_data_from_SR27 <- function(){
   # Source: https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/methods-and-application-of-food-composition-laboratory/mafcl-site-pages/sr11-sr28/
   # User Guide: https://www.ars.usda.gov/ARSUserFiles/80400535/DATA/sr27/sr27_doc.pdf
-  sr27_path="data/sr27asc/"
-  fd_group_df <- import(paste0(sr27_path,"FD_GROUP.txt"),sep="~")
+  sr27_path=file.path(data_path,"sr27asc")
+  fd_group_df <- import(file.path(sr27_path,"FD_GROUP.txt"),sep="~")
   colnames(fd_group_df)=c("a1","group_id","b1","group_name","c1")
-  food_des_df <- import(paste0(sr27_path,"FOOD_DES.txt"),sep="~")
+  food_des_df <- import(file.path(sr27_path,"FOOD_DES.txt"),sep="~")
   colnames(food_des_df)=c("a1","food_id","b1","group_id","c1","food_des","d1","food_des_2","z1","z2","z3","z4","z5","flag1","y1","y2","refuse","y4","y5")
   food_des_df$category <- sapply(food_des_df$food_des,function(input){return(trimws(strsplit(input,",")[[1]][1]))})
   #food_des_df %>% group_by(category) %>% summarise(N=n())
   food_des_df <- food_des_df %>% select("food_id","group_id","food_des","category")
   
-  nut_data_df <- import(paste0(sr27_path,"NUT_DATA.txt"),sep="~")
+  nut_data_df <- import(file.path(sr27_path,"NUT_DATA.txt"),sep="~")
   colnames(nut_data_df)=c("a1","food_id","b1","nutr_id","data","nutr_int1","d1","nutr_acrn1","e1","e2","e3","e4","data_2","f1","f2")
   nut_data_df <- nut_data_df %>% 
     mutate(nutr_value=sapply(str_split(data,"\\^"),`[`, 2)) %>% mutate(nutr_value=as.double(nutr_value)) %>% 
     select("food_id","nutr_id","nutr_value")
   
-  nutr_def_df <- import(paste0(sr27_path,"NUTR_DEF.txt"),sep="~")
+  nutr_def_df <- import(file.path(sr27_path,"NUTR_DEF.txt"),sep="~")
   colnames(nutr_def_df)=c("a1","nutr_id","b1","metric","c1","def_capital","d1","nutr_def","e1","int1","f1","int2","z1")
   nutr_def_df <- nutr_def_df %>% select("nutr_id","metric","nutr_def")
   
@@ -49,7 +50,6 @@ load_data_from_SR27 <- function(){
   assign("nutrition_df",return_df,envir=.GlobalEnv)
 }
 
-load_reference_data <- function(){ ref_df <<- import("data/food_reference_data.txt") }
 
 
 choose_nutrition_df <- function(nutrition_df,ref_df,food_sample=0){
@@ -83,9 +83,10 @@ choose_nutrition_df <- function(nutrition_df,ref_df,food_sample=0){
 
 load_daily_value_nutrient <- function() {
   # Source https://www.fda.gov/media/135301/download?attachment
-  daily_df <<- import("data/daily_value_nutrient.txt") %>% 
+  assign("daily_df",import(file.path(data_path,"daily_value_nutrient.txt")) %>% 
     filter(nutr_def!="") %>% 
-    select(nutr_def,daily_value,daily_metric)
+    select(nutr_def,daily_value,daily_metric),
+    envir=.GlobalEnv)
   
   if(F){ # data transformations kept only for coding studies
     df <- import("data/daily_value_nutrient_rawdata.txt",header=F)

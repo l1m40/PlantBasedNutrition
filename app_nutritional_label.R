@@ -1,4 +1,4 @@
-
+if(!exists("data_path",envir=.GlobalEnv)) assign("data_path","data",envir=.GlobalEnv)
 source("R/shiny_nutritional_label.R",local=T)
 options(shiny.port = 3941)
 options(shiny.host = "0.0.0.0")

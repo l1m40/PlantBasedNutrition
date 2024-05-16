@@ -18,7 +18,7 @@ plot_sample_recipe <- function() {
   if(!exists("nutrition_df")) load_data_from_SR27()
   if(!exists("daily_df")) load_daily_value_nutrient()
   
-  recipe_df <- import("data/recipes/naturalchef_vegan_quiche.txt") %>% mutate(Group="Recipe")
+  recipe_df <- import(file.path(data_path,"recipes","naturalchef_vegan_quiche.txt")) %>% mutate(Group="Recipe")
   recipe_df %>% plot_nutrition_label(1/12,nutrition_df)
 }
 
@@ -60,7 +60,7 @@ plot_nutrition_label <- function(recipe_df,serving_size=(1/8),nutrition_df,good_
     mutate(i=row_number()) %>% 
     ggplot(aes(x=-1,y=-i))+
     geom_rect(aes(xmin=pmax(-1,-daily_percent*2),xmax=.01,ymin=-i+.3,ymax=-i-.3,fill=bar_fill),alpha=.2)+
-    scale_fill_manual(values=c("0"="gray21","1"="green","2"="red"))+
+    scale_fill_manual(values=c("0"="gold","1"="green","2"="red"))+
     geom_hline(aes(yintercept=-i+.5),linetype="dotted",alpha=.5)+
     geom_hline(aes(yintercept=+0.5),linewidth=3)+
     #geom_hline(aes(yintercept=-9.8),linewidth=3)+
