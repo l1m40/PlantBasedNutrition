@@ -87,8 +87,8 @@ ui <- fluidPage(
              hr(),tableOutput("ingredients_table_search_plot")),
     
     tabPanel("Nutritional Label",
-             sliderInput("nutritional_label_serving_slider","Serving Size",0.1,2,1,0.05),
-             br(),br(),uiOutput("nutritional_label_UI"))
+             sliderInput("nutritional_label_serving_slider","Select Serving Size",0.1,2,1,0.05),
+             uiOutput("nutritional_label_UI"),br(),br(),hr())
     
   )
 )
@@ -195,23 +195,37 @@ server <- function(input, output, session) {
   
   
   
-  
+  output$nutritional_size <- renderPlot({ 
+    recipe_df %>% summarise(Size=sum(Size)) %>% ggplot()+
+      geom_text(color="white",vjust=0,hjust=0,size=6,fontface=2,aes(x=1,y=1,label=paste0("Total Size: ",sprintf("%0.0f",Size),"g")))+
+      geom_text(color="white",vjust=0,hjust=1,size=6,fontface=2,aes(x=2,y=1,label=paste0("Serving Size: ",sprintf("%0.0f",Size*input$nutritional_label_serving_slider),"g")))+
+      theme_void()+theme(plot.background=element_rect(fill="black",colour="black"))
+  })
+  output$nutritional_ingredients <- renderPlot({ 
+    recipe_df %>% mutate(ratio=Size/max(Size)) %>% arrange((ratio)) %>% mutate(i=row_number()) %>% 
+      ggplot(aes(x=i))+geom_col(aes(y=ratio),alpha=.3)+
+      geom_text(aes(y=0.1,label=paste0(Food," ",sprintf("%0.0f",Size),"g")),hjust=0)+
+      coord_flip()+theme_void()+theme(legend.position="none")
+  })
   output$nutritional_label <- renderPlot({ 
     print(input$recipe_input)
     suppressWarnings(recipe_df %>% plot_nutrition_label(input$nutritional_label_serving_slider,nutrition_df,T)) })
   output$nutritional_heatmap <- renderPlot({ 
     print(input$recipe_input)
-    choose_nutrition_df(nutrition_df,recipe_df) %>% mutate(Group_factor=Group) %>% 
+    choose_nutrition_df(nutrition_df,recipe_df) %>% mutate(Group_factor=Group,order=-Size) %>% filter(!is.na(value_zscore)) %>%  
       plot_nutrition_value_heatmap()+labs(fill="strenght")+theme(legend.position="bottom")
   })
-  nutritional_heatmap_height <- eventReactive(input$recipe_input,{ as.numeric(pmin(2000,nrow(recipe_df %>% distinct(Food))*10+220)) })
+  nutritional_heatmap_height <- eventReactive(input$recipe_input,{ as.numeric(pmin(2000,nrow(recipe_df %>% distinct(Food))*15)) })
   output$nutritional_label_UI <- renderUI({ 
     #print(nutritional_heatmap_height())
-    fluidRow(br(),br())
+    #fluidRow(br(),br())
     
     fluidRow(
-      plotOutput("nutritional_label"  ,width="350px",height="800px"),
-      plotOutput("nutritional_heatmap",width="350px",height=paste0(nutritional_heatmap_height(),"px")))
+      plotOutput("nutritional_size"         ,width="350px",height="50px"),
+      plotOutput("nutritional_label"        ,width="350px",height="800px"),
+      plotOutput("nutritional_heatmap"      ,width="350px",height=paste0(nutritional_heatmap_height()+180,"px")),
+      plotOutput("nutritional_ingredients"  ,width="350px",height=paste0(nutritional_heatmap_height(),"px"))
+      )
     
     # fluidRow(
     # column(1,plotOutput("")),

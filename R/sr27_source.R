@@ -40,10 +40,10 @@ load_data_from_SR27 <- function(){
     left_join(nutr_def_df,by="nutr_id") %>% 
     left_join(fd_group_df,by="group_id") %>% 
     # mutate(nutr_value=sapply(str_split(data,"\\^"),`[`, 2)) %>% mutate(nutr_value=as.double(nutr_value)) %>% 
-    mutate(other_compositions=((nutr_def=="Energy" & metric=="kcal") | (nutr_def %in% c("Water","Sugars, total","Fiber, total dietary","Cholesterol")) | grepl("Fatty acids",nutr_def))) %>% 
+    mutate(other_compositions=((nutr_def=="Energy" & metric=="kcal") | (nutr_def %in% c("Water","Sugars, total","Fiber, total dietary","Cholesterol")) | grepl("Fatty acids",nutr_def))) %>% mutate(nutr_def=ifelse(grepl("Fatty acids",nutr_def),str_replace(nutr_def,"Fatty acids, total","Fat"),nutr_def)) %>% 
     mutate(macronutrients=(nutr_def %in% c("Protein","Total lipid (fat)","Carbohydrate, by difference"))) %>% mutate(nutr_def=ifelse(nutr_def=="Total lipid (fat)","Fat",ifelse(nutr_def=="Carbohydrate, by difference","Carbo",nutr_def))) %>% 
     mutate(cbo=(nutr_def %in% c("Calcium, Ca","Iron, Fe","Magnesium, Mg","Phosphorus, P","Potassium, K","Sodium, Na","Zinc, Zn","Copper, Cu","Fluoride, F","Manganese, Mn","Selenium, Se"))) %>% 
-    mutate(vitamin=grepl("Vitamin",nutr_def)) %>% 
+    mutate(vitamin=grepl("Vitamin",nutr_def)) %>% mutate(nutr_def=ifelse(nutr_def=="Vitamin C, total ascorbic acid","Vitamin C",ifelse(nutr_def=="Vitamin D2 (ergocalciferol)","Vitamin D2",ifelse(nutr_def=="Vitamin D3 (cholecalciferol)","Vitamin D3",ifelse(nutr_def=="Vitamin E (alpha-tocopherol)","Vitamin E",ifelse(nutr_def=="Vitamin K (phylloquinone)","Vitamin K",nutr_def)))))) %>% 
     mutate(composition=ifelse(macronutrients,"Macro",ifelse(cbo,"CBO",ifelse(vitamin,"Vitamin",ifelse(other_compositions,"Other","NA"))))) %>% filter(composition!="NA") %>% 
     mutate(composition=factor(composition,levels=c("NA","Other","Macro","CBO","Vitamin"))) %>% 
     ungroup()
